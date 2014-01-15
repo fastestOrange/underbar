@@ -84,6 +84,13 @@ var _ = { };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
+  var result = [];
+	_.each(collection, function(item){
+		if(test(item)===false){
+			result.push(item);
+		}
+	});
+	return result;
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
   };
