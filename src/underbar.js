@@ -82,17 +82,12 @@ var _ = { };
   
   };
 
+ 
   // Return all elements of an array that don't pass a truth test.
-  _.reject = function(collection, test) {
-  var result = [];
-	_.each(collection, function(item){
-		if(test(item)===false){
-			result.push(item);
-		}
-	});
-	return result;
-    // TIP: see if you can re-use _.filter() here, without simply
-    // copying code in and modifying it
+  _.reject = function(collection, test){
+      return _.filter(collection, function(item) {
+          return !(test(item));
+      });
   };
 
   // Produce a duplicate-free version of the array.
@@ -142,26 +137,20 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   // Note: you will nead to learn a bit about .apply to complete this.
-  _.invoke = function(collection, functionOrKey, args) {
-	var results = [];
-	if(typeof functionOrKey==='function'){
-		_.each(collection, function(item){
-			var result = functionOrKey.apply(item, args);
-			results.push(result);
-		});
-	} else{
-		_.each(collection, function(item){
-			var result = functionOrKey.apply(item, args);
-			results.push(result);
-		});
-		
-	
-	
-	}
-	return results;
-  
+ _.invoke = function(collection, functionOrKey, args) {
+        var results = [];
+        _.each(collection, function(item){
+            if(typeof functionOrKey==='function'){
+                var result = functionOrKey.apply(item, args);
+                        
+            }else{
+                var result = item[functionOrKey].apply(item, args);
+                     
+            }
+            results.push(result);              
+       });  
+        return results;
   };
-
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
