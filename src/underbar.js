@@ -151,6 +151,7 @@ var _ = { };
        });  
         return results;
   };
+  /*
   // Reduces an array or object to a single value by repetitively calling
   // iterator(previousValue, item) for each item. previousValue should be
   // the return value of the previous iterator call.
@@ -164,31 +165,50 @@ var _ = { };
   //   var sum = _.reduce(numbers, function(total, number){
   //     return total + number;
   //   }, 0); // should be 6
+ 
+  
+  var add = function(tally, item) {return tally + item; };
+    var total = _.reduce([1, 2, 3], add, 0);
+
+    expect(total).to.equal(6);
+*/
   _.reduce = function(collection, iterator, accumulator) {
+		_.each(collection, function(item){
+			accumulator = iterator(accumulator, item);
+			
+		});
+		return accumulator
   };
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
-    // TIP: Many iteration problems can be most easily expressed in
-    // terms of reduce(). Here's a freebie to demonstrate!
     return _.reduce(collection, function(wasFound, item) {
-      if (wasFound) {
+       if (wasFound) {
         return true;
       }
       return item === target;
     }, false);
   };
 
-
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
-  };
+	return _.reduce(collection, function(truthTestResult, item){
+		iterator || (iterator=_.identity);
+		truthTestResult = iterator(item);
+		if(!truthTestResult){
+			return false;
+		}else{
+			return true
+		}
+	}, true);
+};
+
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+	
   };
 
 
@@ -211,6 +231,7 @@ var _ = { };
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+	
   };
 
   // Like extend, but doesn't ever overwrite a key that already
