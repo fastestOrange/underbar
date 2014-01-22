@@ -191,15 +191,20 @@ var _ = { };
   };
 
   // Determine whether all of the elements match a truth test.
-  _.every = function(collection, iterator) {
-	return _.reduce(collection, function(truthTestResult, item){
-		iterator || (iterator=_.identity);
-		truthTestResult = iterator(item);
-		if(!truthTestResult){
+  
+  // _.every is a function which takes two arguments - a collection, an iterator
+ _.every = function(collection, iterator) {
+  
+  // if no iterator is provided, use _.identity
+	iterator = iterator || _.identity;
+	
+  //return reduce which takes three arguments: 1) a collection, 2) a function //to act on that collection and an 3)accumulator(default:true) which the //function return.
+  //The function takes an item from the collection and, if calling the iterator //on an item is falsy - and therefore the collection does not pass, return //false - which makes the returned accumulator false. Otherwise return true. 
+	return _.reduce(collection, function(item){
+		if(!iterator(item)){
 			return false;
-		}else{
-			return true
 		}
+		return true;
 	}, true);
 };
 
@@ -294,6 +299,18 @@ var _ = { };
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+	 var resultSet ={};
+	return function(){
+		if(_.contains(resultSet, result)){
+			return result;
+		}else{
+			var result = func.apply(this, arguments);
+			return resultSet[arguments[0]]=result;
+		}
+			
+	}  
+	
+	
   };
 
   // Delays a function for the given number of milliseconds, and then calls
