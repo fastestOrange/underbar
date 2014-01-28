@@ -319,13 +319,13 @@ describe('some', function() {
 });
 
 describe('extend', function() {
-  it('returns the first argument', function() {
+   it('returns the first argument', function() {
     var to = {};
     var from = {};
     var extended = _.extend(to, from);
 
     expect(extended).to.equal(to);
-  });
+  }); 
 
   it('should extend an object with the attributes of another', function() {
     var to = {};
@@ -335,7 +335,7 @@ describe('extend', function() {
     expect(extended.a).to.equal('b');
   });
 
-  it('should override properties found on the destination', function() {
+   it('should override properties found on the destination', function() {
     var to = {a:'x'};
     var from = {a:'b'};
     var extended = _.extend(to, from);
@@ -367,7 +367,7 @@ describe('extend', function() {
     var extended = _.extend({}, {a: void 0, b: null});
 
     expect('a' in extended && 'b' in extended).to.be(true);
-  });
+  }); 
 });
 
 describe('defaults', function() {
