@@ -200,26 +200,27 @@ var _ = { };
 	
   //return reduce which takes three arguments: 1) a collection, 2) a function //to act on that collection and an 3)accumulator(default:true) which the //function return.
   //The function takes an item from the collection and, if calling the iterator //on an item is falsy - and therefore the collection does not pass, return //false - which makes the returned accumulator false. Otherwise return true. 
-	return _.reduce(collection, function(item){
-		if(!iterator(item)){
-			return false;
-		}
-		return true;
-	}, true);
+	return _.reduce(collection, function(truthTest, item){
+              if(!truthTest || !iterator(item)){
+                    return false;
+                }
+                return true;
+        }, true);
+        
 };
-
+//expect(_.some([1, 10, 29], isEven)).to.equal(true);
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
-  _.some = function(collection, iterator) {
+ _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-	iterator = iterator || _.identity;
-	return _.reduce(collection, function(item, callback){
-		if(iterator(item)){
-			return true;
-		}
-		return false;
-	}, false);
+    iterator = iterator || _.identity;
+    // see if the collectin is false. IF something trips it then some is true
+    // if not every is false then some are true.
+    return !(_.every(collection, function(item){
+       return !iterator(item);  
+    }));
+ 
   };
 
 
